@@ -1,0 +1,47 @@
+.container {
+
+  label {
+    display: inline-block;
+    position: relative;
+  }
+
+  input {
+    position: absolute;
+    left: -9999px;
+  }
+
+  input:checked + div:before {
+    background-image: url("../../../assets/images/icon/ic_checkbox.png");
+    background-size: 75%;
+  }
+}
+
+.text {
+  font-weight: 400;
+  font-size: 13px;
+  color: #fff;
+  letter-spacing: 0.14px;
+  padding-left: 25px;
+  &:before {
+    left: 0;
+    position: absolute;
+    content: '';
+    width: 16px;
+    height: 16px;
+    display: block;
+    border-radius: 5px;
+    border: 1px solid #fff;
+    background-color: #ffffff;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    top: -2px;
+  }
+}
+
+.error {
+  &:before {
+    border-color: #FF4236;
+  }
+
+}

@@ -1,23 +1,23 @@
-import { createRequestTypes } from '../../service/utils';
-import Api from '../../service/api';
+import action, {
+  createRequestActionTypes,
+  REQUEST, SUCCESS, FAILURE,
+} from '../../helpers/action';
 
-export const EXAMPLE_ACTION = createRequestTypes('EXAMPLE_ACTION');
-export const exampleAction = {
-  request: payload => ({
-    type: EXAMPLE_ACTION.REQUEST,
-    payload: {...payload, status: Api.requestStatus},
-  }),
-  success: data => ({
-    type: EXAMPLE_ACTION.SUCCESS,
-    payload: {...data, status: Api.successStatus},
-  }),
-  failure: error => ({
-    type: EXAMPLE_ACTION.FAILURE,
-    payload: {...error, status: Api.failStatus},
+export const actionTypes = {
+  ...createRequestActionTypes('EXAMPLE', {
+    GET: 'GET',
+    SET: 'SET',
   }),
 };
 
-export const SIMPLE_EXAMPLE_ACTION = 'SIMPLE_EXAMPLE_ACTION';
-export const simpleExampleAction = () => ({
-  type: SIMPLE_EXAMPLE_ACTION,
-});
+export const getExampleData = {
+  request: () => action(actionTypes.GET[REQUEST]),
+  success: payload => action(actionTypes.GET[SUCCESS], {payload}),
+  failure: () => action(actionTypes.GET[FAILURE]),
+};
+
+export const setExampleData = {
+  request: (data, onSuccess) => action(actionTypes.SET[REQUEST], {data, onSuccess}),
+  success: payload => action(actionTypes.SET[SUCCESS], {payload}),
+  failure: () => action(actionTypes.SET[FAILURE]),
+};

@@ -1,6 +1,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const commonPaths = require('./paths');
+//const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 
 module.exports = {
   mode: 'production',
@@ -21,7 +22,7 @@ module.exports = {
               sourceMap: false,
               modules: true,
               camelCase: true,
-              localIdentName: '[local]___[hash:base64:5]',
+              localIdentName: '[name]__[local]___[hash:base64:5]',
             },
           },
           'sass-loader',
@@ -29,14 +30,20 @@ module.exports = {
       },
     ],
   },
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+    },
+    noEmitOnErrors: true,
+  },
   plugins: [
     new CleanWebpackPlugin([commonPaths.outputPath.split('/').pop()], {
       root: commonPaths.root,
     }),
     new MiniCssExtractPlugin({
-      filename: `${commonPaths.cssFolder}/[name].css`,
+      filename: `[name].css`,
       chunkFilename: '[id].css',
     }),
+    //new BundleAnalyzerPlugin(),
   ],
-  devtool: 'source-map',
 };

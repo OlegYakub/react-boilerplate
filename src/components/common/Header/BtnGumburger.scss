@@ -1,0 +1,62 @@
+/**
+ * @section btnMenu
+ */
+.b-btnMenu {
+  //padding-left: 20px;
+  position: relative;
+  z-index: 9999;
+  display: none;
+  @media screen and (max-width: 980px){
+    display: block;
+  }
+  $block: &;
+
+  &__input {
+    display: none;
+  }
+
+  &__label {
+    position: relative;
+    width: 20px;
+    height: 14px;
+    display: block;
+    cursor: pointer;
+    transition: all .5s;
+    text-align: left;
+  }
+
+  &__item {
+    position: absolute;
+    height: 2px;
+    width: 20px;
+    border-radius: 4px;
+    background: #fff;
+    transition: top .15s .3s, transform .15s .12s, background-color .5s;
+
+    #{$block}__input:checked + #{$block}__label & {
+      top: 6px;
+      transform: rotate(45deg);
+      transition: top .15s, transform .12s .15s;
+    }
+
+    &:first-child {
+      top: 0;
+    }
+
+    &:nth-child(2) {
+      top: 6px;
+    }
+
+    &:nth-child(3) {
+      top: 12px;
+      right: 0;
+      width: 15px;
+      transition: top .15s .3s, transform .3s;
+      #{$block}__input:checked + #{$block}__label & {
+        transform: rotate(135deg);
+        width: 20px;
+        transition: top .15s, transform .3s .15s;
+      }
+    }
+  }
+}

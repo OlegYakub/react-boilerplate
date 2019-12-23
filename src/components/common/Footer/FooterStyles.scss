@@ -1,0 +1,33 @@
+.footer {
+  width: 100%;
+  margin: auto auto 0;
+  padding: 0 20px;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-top: 1px solid #5e918c;
+    padding: 10px 30px;
+  }
+
+  a {
+    font-size: 13px;
+    color: #fff;
+    text-decoration: none;
+    border-right: 1px solid #fff;
+    margin-right: 10px;
+    padding-right: 10px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:last-of-type {
+      margin-right: 0;
+      padding-right: 0;
+      border-right: none;
+    }
+  }
+}

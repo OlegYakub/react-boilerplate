@@ -1,7 +1,7 @@
-import ExampleComponent from './ExampleComponent/ExampleContainer';
-import Example2Component from './Example2Component/Example2Container';
+import LoginContainer from './Login/LoginContainer';
+import Example from './Example/ExampleContainer';
 
 export {
-  ExampleComponent,
-  Example2Component,
+  LoginContainer,
+  Example,
 };

@@ -1,0 +1,7 @@
+:global {
+	@import 'normalize';
+  @import '../../../node_modules/bootstrap/scss/bootstrap-grid';
+  @import '~rc-slider/assets/index';
+	@import 'fonts';
+	@import 'global';
+}

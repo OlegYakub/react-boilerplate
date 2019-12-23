@@ -7,9 +7,8 @@ import {globals} from './store/globals';
 import configureStore from './store/configure/configureStore';
 import Router from './navigation/Router';
 import rootSaga from './store/configure/rootSaga';
-
 import history from './store/history';
-import './style.scss';
+import './assets/styles/style.scss';
 import App from './App.js';
 
 globals.history = history;
@@ -27,4 +26,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-

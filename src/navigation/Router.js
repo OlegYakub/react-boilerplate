@@ -1,36 +1,34 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {Route, Switch, withRouter} from 'react-router-dom';
+import {Route, Switch, withRouter, Redirect} from 'react-router-dom';
 
-import {ExampleComponent, Example2Component} from '../components/pages';
+import {
+  LoginContainer,
+  Example,
+} from '../components/pages';
+
 import * as ROUTES from './routes';
+// import MainLayout from "../components/common/MainLayout/MainLayout";
 
 // eslint-disable-next-line
 const RouterComponent = ({token}) => {
   const loginedConfig = [
     {
-      id: 'exampleRoute',
-      path: ROUTES.EXAMPLE_ROUTE,
-      component: ExampleComponent,
+      id: 'example',
+      path: ROUTES.EXAMPLE,
+      component: Example,
       exact: true,
     },
   ];
   const notLoginedConfig = [
     {
-      id: 'root',
-      path: ROUTES.ROOT,
-      component: ExampleComponent,
-      exact: true,
-    },
-    {
-      id: 'example2',
-      path: ROUTES.EXAMPLE_ROUTE2,
-      component: Example2Component,
+      id: 'login',
+      path: ROUTES.LOGIN,
+      component: LoginContainer,
       exact: true,
     },
   ];
-  const config = token ? loginedConfig : notLoginedConfig;
+  const config = token ? notLoginedConfig : loginedConfig;
 
   return (
     <Switch>
@@ -38,25 +36,29 @@ const RouterComponent = ({token}) => {
         <Route
           key={route.id}
           path={route.path}
-          component={route.component}
+          render={routeProps => {
+            const Component = route.component;
+            if (route.withoutLayout) {
+              return <Component/>;
+            }
+            if (token) {
+              // return (<MainLayout><Component/></MainLayout>);
+              return (<Component/>);
+            }
+            return <Component {...routeProps}/>;
+          }
+          }
           exact={!!route.exact}
         />
       ))}
-      {/*{ token ? <Redirect from="/" to="/profile" /> : <Redirect from="/profile" to="/" />}*/}
-
-      {/*<Route path='*' component={NoMatch}/>*/}
-
+      <Redirect to={{pathname: token ? ROUTES.LOGIN : ROUTES.EXAMPLE}}/>
     </Switch>
   );
 };
 
-RouterComponent.propTypes = {
-  //token: PropTypes.string,
-};
-
 const mapStateToProps = () => ({
-  //token: auth.token,
-  token: false,
+  // token: auth.token,
+  token: 'token',
 });
 
 export default withRouter(connect(mapStateToProps)(RouterComponent));

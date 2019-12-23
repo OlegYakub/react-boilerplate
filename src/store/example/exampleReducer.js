@@ -1,39 +1,39 @@
-import Api from '../../service/api';
-import * as actionTypes from './exampleActions';
+import {actionTypes} from './exampleActions';
+import { REQUEST, SUCCESS, FAILURE } from '../../helpers/action';
+import Api from "../../service/api";
+
+const {
+  GET,
+  SET,
+} = actionTypes;
 
 const initialState = {
-  data: {},
-  dataStatus: Api.initialStatus,
+  exampleData: null,
+  exampleDataStatus: Api.initialStatus,
 };
 
-export default function example(state = initialState, action) {
-  switch (action.type) {
-
-    case actionTypes.EXAMPLE_ACTION.REQUEST:
+export default function lifestyle(state = initialState, action) {
+  const {type, payload} = action;
+  switch (type) {
+    case GET[REQUEST]:
       return {
         ...state,
-        dataStatus: action.payload.status,
+        questionsDataStatus: Api.requestStatus,
       };
-
-    case actionTypes.EXAMPLE_ACTION.SUCCESS:
+    case GET[SUCCESS]:
+    case SET[SUCCESS]:
       return {
         ...state,
-        data: action.payload.data,
-        dataStatus: action.payload.status,
+        questionsData: payload,
+        questionsDataStatus: Api.successStatus,
       };
-
-    case actionTypes.EXAMPLE_ACTION.FAILURE:
+    case GET[FAILURE]:
       return {
         ...state,
-        dataStatus: action.payload.status,
+        questionsDataStatus: Api.failStatus,
       };
-
-    case actionTypes.SIMPLE_EXAMPLE_ACTION:
-      return {
-        ...state,
-      };
-
     default:
       return state;
   }
 }
+

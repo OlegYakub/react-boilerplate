@@ -1,6 +1,6 @@
 const webpack = require('webpack');
-const convert = require('koa-connect');
-const history = require('connect-history-api-fallback');
+// const convert = require('koa-connect');
+// const history = require('connect-history-api-fallback');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const commonPaths = require('./paths');
@@ -24,7 +24,7 @@ module.exports = {
         exclude: /(node_modules)/,
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
+        test: /\.(png|jpg|gif)$/,
         use: [
           {
             loader: 'file-loader',
@@ -33,6 +33,10 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
       },
       {
         test: /\.(woff2|ttf|woff|eot)$/,
@@ -51,10 +55,16 @@ module.exports = {
     modules: ['src', 'node_modules'],
     extensions: ['*', '.js', '.jsx', '.css', '.scss'],
   },
+  node: {
+    net: 'empty',
+    tls: 'empty',
+    dns: 'empty',
+  },
   plugins: [
     new webpack.ProgressPlugin(),
     new HtmlWebpackPlugin({
       template: commonPaths.templatePath,
+      // favicon: 'public/favicon.png',
     }),
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'async',

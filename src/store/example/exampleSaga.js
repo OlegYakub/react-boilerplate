@@ -1,27 +1,45 @@
-import { all, take, call, put } from 'redux-saga/effects';
-import * as actionTypes from './exampleActions';
-import Api from '../../service/api';
+import { call, put, take } from 'redux-saga/effects';
+import { actionTypes } from './exampleActions';
+import * as actions from './exampleActions';
+import Api from "../../service/api";
 
-function* helloRequest() {
+const {
+  GET, SET,
+} = actionTypes;
+
+/***************************** Sagas ************************************/
+
+function* getQuestionsSaga() {
   while (true) {
-    yield take(actionTypes.EXAMPLE_ACTION.REQUEST);
+    yield take(GET.REQUEST);
     try {
-      const response = yield call(Api.get, 'sample', {
-
-      });
+      const response = yield call(Api.get, 'example/');
       if (response.status) {
-        yield put(actionTypes.exampleAction.success(response.data.resource));
-      } else {
-        yield put(actionTypes.exampleAction.failure(response.data));
+        yield put(actions.getExampleData.success(response.result));
       }
     } catch (e) {
-      yield put(actionTypes.exampleAction.failure(e));
+      console.warn('error -> ', e);//eslint-disable-line
     }
   }
 }
 
-export function* exampleSaga() {
-  yield all([
-    helloRequest(),
-  ]);
+function* setAnswersSaga() {
+  while (true) {
+    const {data, onSuccess} = yield take(SET.REQUEST);
+    try {
+      const response = yield call(Api.put, 'lifestyle/', undefined, data);
+
+      if (response.status) {
+        yield put(actions.setExampleData.success());
+        onSuccess();
+      }
+    } catch (e) {
+      console.warn('error -> ', e);//eslint-disable-line
+    }
+  }
 }
+
+export default [
+  getQuestionsSaga,
+  setAnswersSaga,
+];
